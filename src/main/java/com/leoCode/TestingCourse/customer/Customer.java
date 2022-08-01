@@ -1,5 +1,6 @@
 package com.leoCode.TestingCourse.customer;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
@@ -10,8 +11,10 @@ public class Customer {
     @Id
     private UUID id;
     @NotBlank
+    @Column(nullable = false)
     private String name;
     @NotBlank
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
     public Customer(){
