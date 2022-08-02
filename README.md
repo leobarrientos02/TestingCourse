@@ -1,5 +1,6 @@
-# TestingCourse
-Testing course I am taking to write better test for my code to write better code.<br />
+# Testing Course
+This is the code from a testing course I am taking to write better tests for my code to write better code.<br />
+Course Link: https://amigoscode.com/courses/software-testing <br />
 This course covers many topics such as:
 1) Unit Testing
 2) Integration Testing
