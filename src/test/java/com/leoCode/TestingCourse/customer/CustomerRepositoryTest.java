@@ -25,19 +25,17 @@ class CustomerRepositoryTest {
     void itShouldSaveCustomer(){
         // Given
         UUID id = UUID.randomUUID();
-        Customer customer = new Customer(id, "Leonel Barrientos", "516-960-8086");
+        Customer customer = new Customer(id, "Leonel Barrientos", "0000");
 
         // When
         underTest.save(customer);
 
-        // Then
+        // Thens
         Optional<Customer> optionalCustomer = underTest.findById(id);
         assertThat(optionalCustomer)
                 .isPresent()
                 .hasValueSatisfying(c -> {
-                    assertThat(c.getId()).isEqualTo(id);
-                    assertThat(c.getName()).isEqualTo("Leonel Barrientos");
-                    assertThat(c.getPhoneNumber()).isEqualTo("516-960-8086");
+                    assertThat(c).isEqualTo(customer);
                 });
     }
 
@@ -56,9 +54,7 @@ class CustomerRepositoryTest {
         Optional<Customer> optionalCustomer = underTest.selectCustomerByPhoneNumber(phoneNumber);
         assertThat(optionalCustomer).isPresent()
                 .hasValueSatisfying(c -> {
-                    assertThat(c.getId()).isEqualTo(id);
-                    assertThat(c.getName()).isEqualTo(name);
-                    assertThat(c.getPhoneNumber()).isEqualTo(phoneNumber);
+                    assertThat(c).isEqualTo(customer);
                 });
     }
     @Test
@@ -88,9 +84,7 @@ class CustomerRepositoryTest {
         Optional<Customer> optionalCustomer = underTest.selectCustomerByName(name);
         assertThat(optionalCustomer).isPresent()
                 .hasValueSatisfying(c -> {
-                    assertThat(c.getId()).isEqualTo(id);
-                    assertThat(c.getName()).isEqualTo(name);
-                    assertThat(c.getPhoneNumber()).isEqualTo(phoneNumber);
+                    assertThat(c).isEqualTo(customer);
                 });
     }
 

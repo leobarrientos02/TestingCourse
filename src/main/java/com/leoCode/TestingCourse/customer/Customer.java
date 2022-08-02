@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -61,5 +62,13 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return id.equals(customer.id) && name.equals(customer.name) && phoneNumber.equals(customer.phoneNumber);
     }
 }
