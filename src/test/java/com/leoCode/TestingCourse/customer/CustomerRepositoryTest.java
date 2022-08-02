@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
         properties = {
                 "spring.jpa.properties.javax.persistence.validation.mode=none"
         }
-)
+) // properties = {} :tells the program to check annotation on entity's columns
 class CustomerRepositoryTest {
 
     @Autowired
@@ -115,6 +115,7 @@ class CustomerRepositoryTest {
         // When
         // Then
         assertThatThrownBy(() -> underTest.save(customer))
+                .hasMessageContaining("not-null property references a null or transient value : com.leoCode.TestingCourse.customer.Customer.name")
                 .isInstanceOf(DataIntegrityViolationException.class);
     }
 
@@ -128,6 +129,7 @@ class CustomerRepositoryTest {
         // When
         // Then
         assertThatThrownBy(() -> underTest.save(customer))
+                .hasMessageContaining("not-null property references a null or transient value : com.leoCode.TestingCourse.customer.Customer.phoneNumber")
                 .isInstanceOf(DataIntegrityViolationException.class);
     }
 

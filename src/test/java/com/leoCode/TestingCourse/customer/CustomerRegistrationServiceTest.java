@@ -122,4 +122,5 @@ class CustomerRegistrationServiceTest {
         // Finally
         then(customerRepository).should(never()).save(any(Customer.class));
     }
+
 }
