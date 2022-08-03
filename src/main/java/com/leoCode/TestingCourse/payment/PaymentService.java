@@ -31,14 +31,14 @@ public class PaymentService {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
         if(optionalCustomer.isEmpty()){
             throw new IllegalStateException(
-                    String.format("Customer with the id [%s] was not found",customerId));
+                    String.format("Customer with the id %s was not found",customerId));
         }
         // 2. Do we support the currency if not throw
         boolean isCurrencySupported = acceptedCurrencies.stream()
                 .anyMatch(c -> c.equals(request.getPayment().getCurrency()));
         if(!isCurrencySupported){
             throw new IllegalStateException(
-                    String.format("Currency [%s} is not supported",
+                    String.format("Currency %s is not supported",
                             request.getPayment().getCurrency())
             );
         }
@@ -54,7 +54,7 @@ public class PaymentService {
         // 4. If not charged throw
         if(!cardPaymentCharge.isCardCharged()){
             throw new IllegalStateException(
-                    String.format("Card [%s] was not charged",
+                    String.format("Card %s was not charged",
                             request.getPayment().getSource())
             );
         }
