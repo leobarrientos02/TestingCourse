@@ -73,7 +73,7 @@ class StripeServiceTest {
 
         // card is debited successfully
         assertThat(cardPaymentCharge).isNotNull();
-        assertThat(cardPaymentCharge.isCardCharged()).isTrue();
+        assertThat(cardPaymentCharge.isCardDebited()).isTrue();
     }
 
     @Test

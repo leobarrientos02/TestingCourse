@@ -1,68 +1,65 @@
 package com.leoCode.TestingCourse.payment;
 
-import com.leoCode.TestingCourse.customer.Customer;
 import com.leoCode.TestingCourse.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
-import static com.leoCode.TestingCourse.payment.Currency.*;
 
 @Service
 public class PaymentService {
 
-    private static final List<Currency> acceptedCurrencies = List.of(USD,GBP);
+    private static final List<Currency> ACCEPTED_CURRENCIES = List.of(Currency.USD, Currency.GBP);
+
     private final CustomerRepository customerRepository;
     private final PaymentRepository paymentRepository;
     private final CardPaymentCharger cardPaymentCharger;
 
     @Autowired
-    public PaymentService(CustomerRepository customerRepository, PaymentRepository paymentRepository, CardPaymentCharger cardPaymentCharger) {
+    public PaymentService(CustomerRepository customerRepository,
+                          PaymentRepository paymentRepository,
+                          CardPaymentCharger cardPaymentCharger) {
         this.customerRepository = customerRepository;
         this.paymentRepository = paymentRepository;
         this.cardPaymentCharger = cardPaymentCharger;
     }
 
-    public void chargeCard(UUID customerId, PaymentRequest request){
-        // 1. Does customer exist if not throw
-        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        if(optionalCustomer.isEmpty()){
-            throw new IllegalStateException(
-                    String.format("Customer with the id %s was not found",customerId));
+    void chargeCard(UUID customerId, PaymentRequest paymentRequest) {
+        // 1. Does customer exists if not throw
+        boolean isCustomerFound = customerRepository.findById(customerId).isPresent();
+        if (!isCustomerFound) {
+            throw new IllegalStateException(String.format("Customer with id %s not found", customerId));
         }
+
         // 2. Do we support the currency if not throw
-        boolean isCurrencySupported = acceptedCurrencies.stream()
-                .anyMatch(c -> c.equals(request.getPayment().getCurrency()));
-        if(!isCurrencySupported){
-            throw new IllegalStateException(
-                    String.format("Currency %s is not supported",
-                            request.getPayment().getCurrency())
-            );
+        boolean isCurrencySupported = ACCEPTED_CURRENCIES.contains(paymentRequest.getPayment().getCurrency());
+
+        if (!isCurrencySupported) {
+            String message = String.format(
+                    "Currency [%s] not supported",
+                    paymentRequest.getPayment().getCurrency());
+            throw new IllegalStateException(message);
         }
 
         // 3. Charge card
         CardPaymentCharge cardPaymentCharge = cardPaymentCharger.chargeCard(
-                request.getPayment().getSource(),
-                request.getPayment().getAmount(),
-                request.getPayment().getCurrency(),
-                request.getPayment().getDescription()
+                paymentRequest.getPayment().getSource(),
+                paymentRequest.getPayment().getAmount(),
+                paymentRequest.getPayment().getCurrency(),
+                paymentRequest.getPayment().getDescription()
         );
 
-        // 4. If not charged throw
-        if(!cardPaymentCharge.isCardCharged()){
-            throw new IllegalStateException(
-                    String.format("Card %s was not charged",
-                            request.getPayment().getSource())
-            );
+        // 4. If not debited throw
+        if (!cardPaymentCharge.isCardDebited()) {
+            throw new IllegalStateException(String.format("Card not debited for customer %s", customerId));
         }
 
         // 5. Insert payment
-        request.getPayment().setCustomerId(customerId);
-        paymentRepository.save(request.getPayment());
+        paymentRequest.getPayment().setCustomerId(customerId);
 
-        // 6. TODO: sens sms
+        paymentRepository.save(paymentRequest.getPayment());
+
+        // 6. TODO: send sms
     }
 }

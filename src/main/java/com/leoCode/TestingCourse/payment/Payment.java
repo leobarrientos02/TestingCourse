@@ -101,6 +101,11 @@ public class Payment {
         if (this == o) return true;
         if (!(o instanceof Payment)) return false;
         Payment payment = (Payment) o;
-        return getPaymentId().equals(payment.getPaymentId()) && getCustomerId().equals(payment.getCustomerId()) && getAmount().equals(payment.getAmount()) && getCurrency() == payment.getCurrency() && getSource().equals(payment.getSource()) && getDescription().equals(payment.getDescription());
+        return paymentId.equals(payment.paymentId) && customerId.equals(payment.customerId) && amount.equals(payment.amount) && currency == payment.currency && source.equals(payment.source) && description.equals(payment.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentId, customerId, amount, currency, source, description);
     }
 }

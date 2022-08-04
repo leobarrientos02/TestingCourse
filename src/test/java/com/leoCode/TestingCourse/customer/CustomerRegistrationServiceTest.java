@@ -117,7 +117,7 @@ class CustomerRegistrationServiceTest {
         // Then
         assertThatThrownBy(() -> underTest.registerNewCustomer(request))
                 .isInstanceOf(IllegalStateException.class)
-                        .hasMessageContaining(String.format("Phone number [%s] is taken",phoneNumber));
+                        .hasMessageContaining(String.format("Phone number %s is taken",phoneNumber));
 
         // Finally
         then(customerRepository).should(never()).save(any(Customer.class));

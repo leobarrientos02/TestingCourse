@@ -28,7 +28,7 @@ public class CustomerRegistrationService {
                 return;
             }
             // - 2.2 throw an exception
-            throw new IllegalStateException(String.format("Phone number [%s] is taken",phoneNumber));
+            throw new IllegalStateException(String.format("Phone number %s is taken",phoneNumber));
         }
         if(request.getCustomer().getId() == null){
             request.getCustomer().setId(UUID.randomUUID());
