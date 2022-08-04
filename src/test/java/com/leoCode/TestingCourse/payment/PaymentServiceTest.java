@@ -18,6 +18,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
+/*
+    AssertThatThrownBy() is used to ensure that an exception is being
+    thrown when it is expected.
+    @Mock is used with MockitoAnnotations.openMocks(this) to mock classes
+    that are needed to test the class.
+ */
 class PaymentServiceTest {
 
     @Mock private CustomerRepository customerRepository;

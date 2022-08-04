@@ -11,6 +11,10 @@ import java.util.UUID;
 import static com.leoCode.TestingCourse.payment.Currency.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/*
+    @DataJpaTest: this annotation is used to test our repositories to see if
+    we are successfully getting the data we queried.
+ */
 @DataJpaTest(
         properties = {
                 "spring.jpa.properties.javax.persistence.validation.mode=none"

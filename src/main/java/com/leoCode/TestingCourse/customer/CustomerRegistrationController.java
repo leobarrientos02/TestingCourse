@@ -14,6 +14,6 @@ public class CustomerRegistrationController {
     @PutMapping
     public void registerNewCustomer(
             @Valid @RequestBody CustomerRegistrationRequest request){
-
+        System.out.println(request);
     }
 }

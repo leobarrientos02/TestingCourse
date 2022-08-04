@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@JsonIgnoreProperties(allowGetters = true) // Ignore anything coming from the client, but payload will include the id
+@JsonIgnoreProperties(allowGetters = true)
 public class Customer {
     @Id
     private UUID id;
