@@ -29,7 +29,7 @@ public class PaymentService {
         // 1. Does customer exists if not throw
         boolean isCustomerFound = customerRepository.findById(customerId).isPresent();
         if (!isCustomerFound) {
-            throw new IllegalStateException(String.format("Customer with id %s not found", customerId));
+            throw new IllegalStateException("Customer with the id " + customerId + " was not found");
         }
 
         // 2. Do we support the currency if not throw
@@ -37,7 +37,7 @@ public class PaymentService {
 
         if (!isCurrencySupported) {
             String message = String.format(
-                    "Currency [%s] not supported",
+                    "Currency %s is not supported",
                     paymentRequest.getPayment().getCurrency());
             throw new IllegalStateException(message);
         }
@@ -52,7 +52,7 @@ public class PaymentService {
 
         // 4. If not debited throw
         if (!cardPaymentCharge.isCardDebited()) {
-            throw new IllegalStateException(String.format("Card not debited for customer %s", customerId));
+            throw new IllegalStateException("Card " + paymentRequest.getPayment().getSource() + " was not charged");
         }
 
         // 5. Insert payment

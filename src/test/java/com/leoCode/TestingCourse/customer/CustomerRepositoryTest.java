@@ -25,7 +25,7 @@ class CustomerRepositoryTest {
     void itShouldSaveCustomer(){
         // Given
         UUID id = UUID.randomUUID();
-        Customer customer = new Customer(id, "Leonel Barrientos", "0000");
+        Customer customer = new Customer(id, "Leonel Barrientos", "123-456-7890");
 
         // When
         underTest.save(customer);
@@ -44,7 +44,7 @@ class CustomerRepositoryTest {
         // Given
         UUID id = UUID.randomUUID();
         String name = "Leonel Barrientos";
-        String phoneNumber = "0000";
+        String phoneNumber = "123-456-7890";
         Customer customer = new Customer(id, name, phoneNumber);
 
         // When
@@ -60,7 +60,7 @@ class CustomerRepositoryTest {
     @Test
     void itShouldNotSelectCustomerByPhoneNumberWhenNumberDoesNotExist(){
         // Given
-        String phoneNumber = "0000";
+        String phoneNumber = "123-456-7890";
 
         // When
         Optional<Customer> optionalCustomer = underTest.selectCustomerByPhoneNumber(phoneNumber);
@@ -74,7 +74,7 @@ class CustomerRepositoryTest {
         // Given
         UUID id = UUID.randomUUID();
         String name = "Leonel Barrientos";
-        String phoneNumber = "0000";
+        String phoneNumber = "123-456-7890";
         Customer customer = new Customer(id, name, phoneNumber);
 
         // When
@@ -103,7 +103,7 @@ class CustomerRepositoryTest {
     void itShouldNotSaveCustomerWhenNameIsNull() {
         // Given
         UUID id = UUID.randomUUID();
-        String phoneNumber = "0000";
+        String phoneNumber = "123-456-7890";
         Customer customer = new Customer(id, null, phoneNumber);
 
         // When
