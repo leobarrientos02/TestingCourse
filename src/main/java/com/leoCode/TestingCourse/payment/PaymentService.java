@@ -26,7 +26,7 @@ public class PaymentService {
     }
 
     void chargeCard(UUID customerId, PaymentRequest paymentRequest) {
-        // 1. Does customer exists if not throw
+        // 1. Does customer exist if not throw
         boolean isCustomerFound = customerRepository.findById(customerId).isPresent();
         if (!isCustomerFound) {
             throw new IllegalStateException("Customer with the id " + customerId + " was not found");
